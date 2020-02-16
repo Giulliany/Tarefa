@@ -31,6 +31,7 @@ function listar() {
                                                             <th>\
                                                                 <button class="btn" onclick="apagar('+i+')"><img src="assets/bin.png"/></button>\
                                                                 <button class="btn" onclick="editar('+i+')"><img src="assets/pen.png"/></button>\
+                                                                <button class="btn" onclick="concluida('+i+')"><img src="assets/ok.png"/></button>\
                                                             </th>\
                                                         </tr>'//listando as tarefas
         }
@@ -47,4 +48,7 @@ function editar(key) {
     var edit = prompt('Editar Tarefa:',tbtarefa.titulo +'em'+ tbtarefa.data).split('em')
     localStorage.setItem(key,JSON.stringify(new Tarefa(edit[0],edit[1])))
     location.reload()
+}
+function concluida(key) {
+      
 }
