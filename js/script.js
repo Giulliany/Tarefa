@@ -1,8 +1,8 @@
-
 class Tarefa{
     constructor(titulo, data){
         this.titulo = titulo;
         this.data = data
+        this.concluida = false
     }
 }
 // Programa
@@ -26,15 +26,16 @@ function listar() {
                                                     //no localstorage em um objeto
         console.log(tbtarefa,'cont:',i)
         if(tbtarefa!=null){
-            document.getElementById('lista').innerHTML +='<tr>\
-                                                            <th>'+tbtarefa.data+'</th>\
-                                                            <th>'+tbtarefa.titulo+'</th>\
-                                                            <th>\
-                                                                <button class="btn" onclick="apagar('+i+')"><img src="assets/bin.png"/></button>\
-                                                                <button class="btn" onclick="editar('+i+')"><img src="assets/pen.png"/></button>\
-                                                                <button class="btn" onclick="concluida('+i+')"><img src="assets/ok.png"/></button>\
-                                                            </th>\
-                                                        </tr>'//listando as tarefas
+            var texto = ' <th>'+tbtarefa.data+'</th>\
+                            <th>'+tbtarefa.titulo+'</th>\
+                            <th>\
+                                <button class="btn" onclick="concluir('+i+')"><img src="assets/accept.png"/></button>\
+                                <button class="btn" onclick="editar('+i+')"><img src="assets/pen.png"/></button>\
+                                <button class="btn" onclick="apagar('+i+')"><img src="assets/bin.png"/></button>\
+                                </th>\
+                        </tr>'
+            document.getElementById('lista').innerHTML +='<tr '+ (tbtarefa.concluida? ' id="tarchar"> ' + texto : '>'+ texto)
+                                                            //listando as tarefas
         }
     }
 }
@@ -46,13 +47,14 @@ function apagar(key) {
 
 function editar(key) {
     tbtarefa =JSON.parse(localStorage.getItem(key));
-    var edit = prompt('Editar Tarefa:', tbtarefa.titulo  +'em'+ tbtarefa.data).split('em')
+    var edit = prompt('Editar Tarefa:',tbtarefa.titulo +'em'+ tbtarefa.data).split('em')
     localStorage.setItem(key,JSON.stringify(new Tarefa(edit[0],edit[1])))
     location.reload()
 }
-function concluida(key) {
-    tbtarefa =JSON.parse(localStorage.getItem(key));
-    var edit = prompt('Concluir tarefa:', tbtarefa.titulo  +'em'+ tbtarefa.data).split('em')
-    localStorage.setItem(key,JSON.stringify(new Tarefa('<del>'+edit[0]+'</del>','<del>'+edit[1]+'</del>')))
+function concluir(key){
+    tbtarefa = JSON.parse(localStorage.getItem(key));
+    tbtarefa.concluida = true
+    localStorage.setItem(key,JSON.stringify(tbtarefa))
     location.reload()
 }
+
